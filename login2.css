@@ -1,0 +1,271 @@
+/* Reset and Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Raleway", sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+a {
+    text-decoration: none;
+    color: #0275d8;
+}
+
+/* Header Styles */
+.header {
+    background-color: #6f7074;
+    padding: 10px 0;
+    border-bottom: 1px solid #5a5a5a;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 300px;
+    height: 56px;
+    object-fit: contain;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.language-selector {
+    font-size: 14px;
+    margin-right: 20px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.language-selector span {
+    margin-right: 5px;
+}
+
+.auth-links a {
+    font-size: 14px;
+    color: #fff;
+    margin-right: 20px;
+}
+
+.search-button {
+    cursor: pointer;
+    color: #fff;
+}
+
+/* Main Navigation */
+.main-nav {
+    background-color: #6f7074;
+    color: white;
+    padding: 15px 0;
+    border-top: 1px solid #5a5a5a;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.system-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.breadcrumb {
+    text-align: right;
+    font-size: 14px;
+}
+
+.breadcrumb a {
+    color: white;
+}
+
+/* Main Content */
+.main-content {
+    padding: 40px 0;
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.login-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+
+.remember-me input {
+    margin-right: 5px;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #0275d8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #025aa5;
+}
+
+.cookie-notice {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: #f0f0f0;
+    padding: 30px 0;
+    border-top: 1px solid #e0e0e0;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.footer-logo-img {
+    width: 410px;
+    height: 79px;
+    object-fit: contain;
+}
+
+.footer-campuses {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.campus {
+    flex: 1;
+    padding: 0 15px;
+}
+
+.campus h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.campus p {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .header-right {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .breadcrumb {
+        text-align: left;
+        margin-top: 5px;
+    }
+    
+    .footer-campuses {
+        flex-direction: column;
+    }
+    
+    .campus {
+        margin-bottom: 20px;
+    }
+    
+    .logo {
+        width: 220px;
+        height: auto;
+    }
+    
+    .footer-logo-img {
+        width: 280px;
+        height: auto;
+    }
+}
