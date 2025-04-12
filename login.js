@@ -51,3 +51,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+require("dotenv").config(); // Load biến môi trường
+
+const express = require("express");
+const connectDB = require("./db");
+
+const app = express();
+connectDB();
+
