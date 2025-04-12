@@ -1,0 +1,128 @@
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LMS TMU - Hệ thống học trực tuyến Đại học Thương mại</title>
+        <link rel="shortcut icon" href="https://cdn-static.tmu.edu.vn/moodledata/filedir/46/0c/460ca143a07e4d6e30e5c62c4dd99c8fae6f9ed5.jpg">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="keywords" content="moodle, LMS TMU - Hệ thống học trực tuyến Đại học Thương mại">
+        <meta name="description" content="LMS TMU - Hệ thống học trực tuyến Đại học Thương mại">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="login.css">
+        <link rel="stylesheet" href="login.js">
+    </head>
+    <body>
+        <header class="header transparent" id="header">
+            <div class="container">
+                <a href="#" class="logo-container">
+                    <img src="logo tmu backgorund.png" alt="TMU Logo" class="logo-img">
+                </a>
+                <div class="header-right">
+                    <div class="language-selector">
+                        <span>VIETNAMESE (VI)</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="login-register">
+                        <a href="#" id="loginBtn">Đăng nhập/Đăng ký</a>
+                    </div>
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">Hệ thống học trực tuyến Đại học Thương mại</h1>
+                    <button class="start-btn" id="startBtn">Bắt đầu ngay</button>
+                </div>
+                <div class="wave-separator"></div>
+            </section>
+
+            <section class="content-section">
+                <div class="container">
+                    <!-- Content here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Login Modal -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="login-modal" id="loginModal">
+                <button class="close-modal" id="closeModal">&times;</button>
+                <h2 class="form-title">Đăng nhập vào tài khoản của bạn</h2>
+                <form>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" 
+                            placeholder="Tên đăng nhập" 
+                            class="input-field"
+                            autocomplete="username">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" 
+                            placeholder="Mật khẩu" 
+                            class="input-field"
+                            autocomplete="current-password">
+                    </div>
+                    <div class="form-footer">
+                        <label class="remember-me">
+                            <input type="checkbox">
+                            <span>Nhớ tên tài khoản</span>
+                        </label>
+                        <a href="#" class="forgot-password">Quên mật khẩu?</a>
+                    </div>
+                    <button type="submit" class="submit-btn">Đăng nhập</button>
+                </form>
+                <div class="alternative-login">
+                    <p>Hoặc đăng nhập với</p>
+                    <div class="social-login">
+                        <button class="google-login">
+                            <i class="fab fa-google"></i>
+                            Google
+                        </button>
+                        <button class="office-login">
+                            <i class="fab fa-microsoft"></i>
+                            Office 365
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="footer logo.png" alt="TMU Footer Logo">
+                </div>
+                
+                <div class="footer-info">
+                    <div class="campus">
+                        <h3>Cơ sở 1</h3>
+                        <p>Địa chỉ: 79 Hồ Tùng Mậu Cầu Giấy, Hà Nội</p>
+                        <p>Điện thoại: (024) 3764 3219</p>
+                        <p>Fax: (024) 37643228</p>
+                        <p>Email: mail@tmu.edu.vn</p>
+                    </div>
+                    
+                    <div class="campus">
+                        <h3>Cơ sở 2</h3>
+                        <p>Địa chỉ: đường Lý Thường Kiệt, phường Lê Hồng Phong, Phủ Lý, Hà Nam</p>
+                        <p>Điện thoại: (024) 3764 3219</p>
+                        <p>Fax: (024) 37643228</p>
+                        <p>Email: mail@tmu.edu.vn</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>Copyright © 2022 TMU. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </body>
+    </html>
