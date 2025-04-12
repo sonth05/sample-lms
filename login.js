@@ -114,5 +114,52 @@ router.post('/login', async (req, res) => {
       res.status(500).json({ error: err.message });
     }
   });
+ 
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Elements
+  const loginBtn = document.getElementById('loginBtn');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const loginModal = document.getElementById('loginModal');
+  const closeModal = document.getElementById('closeModal');
   
-
+  // Open modal when login button is clicked
+  if (loginBtn) {
+      loginBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          modalOverlay.classList.add('show');
+          loginModal.classList.add('show');
+          document.body.style.overflow = 'hidden'; // Prevent scrolling while modal is open
+      });
+  }
+  
+  // Close modal when close button is clicked
+  if (closeModal) {
+      closeModal.addEventListener('click', function() {
+          modalOverlay.classList.remove('show');
+          loginModal.classList.remove('show');
+          document.body.style.overflow = ''; // Enable scrolling again
+      });
+  }
+  
+  // Close modal when clicking outside of it
+  if (modalOverlay) {
+      modalOverlay.addEventListener('click', function(e) {
+          // Only close if clicking directly on the overlay (not the modal itself)
+          if (e.target === modalOverlay) {
+              modalOverlay.classList.remove('show');
+              loginModal.classList.remove('show');
+              document.body.style.overflow = ''; // Enable scrolling again
+          }
+      });
+  }
+  
+  // Close modal with Escape key
+  document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modalOverlay.classList.contains('show')) {
+          modalOverlay.classList.remove('show');
+          loginModal.classList.remove('show');
+          document.body.style.overflow = ''; // Enable scrolling again
+      }
+  });
+});

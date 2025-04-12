@@ -8,14 +8,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="login2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="login2.css">
 </head>
 <body>
     <header class="header">
         <div class="container header-container">
             <div class="logo-container">
-                <img src="logo tmu backgorund.png" alt="TMU Logo" class="logo">
+                <a href="index.html">
+                    <img src="logo tmu backgorund.png" alt="TMU Logo" class="logo">
+                </a>
             </div>
             <div class="header-right">
                 <div class="language-selector">
@@ -44,7 +46,11 @@
         <div class="login-container">
             <h1 class="login-title">Đăng nhập vào tài khoản của bạn</h1>
             
-            <form class="login-form">
+            <div id="error-message" class="error-message">
+                Tên tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại.
+            </div>
+            
+            <form id="login-form" class="login-form">
                 <div class="form-group">
                     <input type="text" id="username" placeholder="Tên tài khoản" required>
                 </div>
@@ -59,10 +65,16 @@
                     <a href="#" class="forgot-password">Quên mật khẩu?</a>
                 </div>
                 <button type="submit" class="login-button">Đăng nhập</button>
-                <div class="cookie-notice">
-                    Trình duyệt của bạn cần phải mở chức năng quản lý cookie <i class="fas fa-info-circle"></i>
-                </div>
             </form>
+            
+            <div class="sample-accounts">
+                <h3>Tài khoản mẫu để đăng nhập:</h3>
+                <ul>
+                    <li><strong>Sinh viên:</strong> username: student123, password: student@tmu</li>
+                    <li><strong>Giảng viên:</strong> username: teacher456, password: teacher@tmu</li>
+                    <li><strong>Quản trị viên:</strong> username: admin789, password: admin@tmu</li>
+                </ul>
+            </div>
         </div>
     </main>
 
@@ -70,7 +82,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="footer logo.png" alt="TMU Logo" class="footer-logo-img">
+                    <img src="/api/placeholder/410/79" alt="TMU Logo" class="footer-logo-img">
                 </div>
                 
                 <div class="footer-campuses">
@@ -93,5 +105,62 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Sample accounts for login
+        const validAccounts = [
+            { username: 'student123', password: 'student@tmu', role: 'student' },
+            { username: 'teacher456', password: 'teacher@tmu', role: 'teacher' },
+            { username: 'admin789', password: 'admin@tmu', role: 'admin' }
+        ];
+
+        // Get form elements
+        const loginForm = document.getElementById('login-form');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('error-message');
+        const rememberCheckbox = document.getElementById('remember');
+
+        // Check if there's a remembered username
+        if (localStorage.getItem('rememberedUsername')) {
+            usernameInput.value = localStorage.getItem('rememberedUsername');
+            rememberCheckbox.checked = true;
+        }
+
+        // Handle form submission
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            // Check if credentials are valid
+            const validAccount = validAccounts.find(account => 
+                account.username === username && account.password === password
+            );
+            
+            if (validAccount) {
+                // Save username if "remember me" is checked
+                if (rememberCheckbox.checked) {
+                    localStorage.setItem('rememberedUsername', username);
+                } else {
+                    localStorage.removeItem('rememberedUsername');
+                }
+                
+                // Store user info in session storage
+                sessionStorage.setItem('currentUser', JSON.stringify({
+                    username: validAccount.username,
+                    role: validAccount.role
+                }));
+                
+                // Redirect to dashboard page (would be to the actual dashboard page in a real implementation)
+                window.location.href = 'main.html';
+            } else {
+                // Show error message
+                errorMessage.style.display = 'block';
+                passwordInput.value = ''; // Clear password field
+            }
+        });
+    </script>
 </body>
 </html>
