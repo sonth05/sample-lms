@@ -37,7 +37,7 @@
         <div class="container nav-container">
             <div class="system-title">TMU - HỆ THỐNG QUẢN LÝ HỌC TRỰC TUYẾN</div>
             <div class="breadcrumb">
-                <a href="#">Trang chủ</a> / <span>Đăng nhập</span>
+                <a href="index.html">Trang chủ</a> / <span>Đăng nhập</span>
             </div>
         </div>
     </div>
@@ -62,7 +62,7 @@
                         <input type="checkbox" id="remember">
                         <label for="remember">Nhớ tên tài khoản</label>
                     </div>
-                    <a href="#" class="forgot-password">Quên mật khẩu?</a>
+                    <a href="forgotps.html" class="forgot-password">Quên mật khẩu?</a>
                 </div>
                 <button type="submit" class="login-button">Đăng nhập</button>
             </form>
@@ -72,46 +72,96 @@
                 <ul>
                     <li><strong>Sinh viên:</strong> username: student123, password: student@tmu</li>
                     <li><strong>Giảng viên:</strong> username: teacher456, password: teacher@tmu</li>
-                    <li><strong>Quản trị viên:</strong> username: admin789, password: admin@tmu</li>
                 </ul>
             </div>
         </div>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="/api/placeholder/410/79" alt="TMU Logo" class="footer-logo-img">
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Đăng nhập vào tài khoản của bạn</h2>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Nhớ tên tài khoản</label>
                 </div>
-                
-                <div class="footer-campuses">
-                    <div class="campus">
-                        <h3>Cơ sở 1</h3>
-                        <p>Địa chỉ: 79 Hồ Tùng Mậu Cầu Giấy, Hà Nội</p>
-                        <p>Điện thoại: (024) 3764 3219</p>
-                        <p>Fax: (024) 37643228</p>
-                        <p>Email: mail@tmu.edu.vn</p>
-                    </div>
-                    
-                    <div class="campus">
-                        <h3>Cơ sở 2</h3>
-                        <p>Địa chỉ: đường Lý Thường Kiệt, phường Lê Hồng Phong, Phủ Lý, Hà Nam</p>
-                        <p>Điện thoại: (024) 3764 3219</p>
-                        <p>Fax: (024) 37643228</p>
-                        <p>Email: mail@tmu.edu.vn</p>
-                    </div>
+                <div class="forgot-password">
+                    <a href="#">Quên mật khẩu?</a>
+                </div>
+            </div>
+            
+            <button type="submit">Đăng nhập</button>
+        </form>
+    </div>
+</div>
+    <div class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <img src="footer logo.png" alt="TMU Logo" class="footer-logo">
+            </div>
+            
+            <div class="campus-info">
+                <h3>Cơ sở 1</h3>
+                <div class="campus-details">
+                    <p>Địa chỉ: 79 Hồ Tùng Mậu Cầu Giấy, Hà Nội</p>
+                    <p>Điện thoại: (024) 3764 3219</p>
+                    <p>Fax: (024) 37643228</p>
+                    <p>Email: mail@tmu.edu.vn</p>
+                </div>
+            </div>
+            
+            <div class="campus-info">
+                <h3>Cơ sở 2</h3>
+                <div class="campus-details">
+                    <p>Địa chỉ: đường Lý Thường Kiệt, phường Lê Hồng Phong, Phủ Lý, Hà Nam</p>
+                    <p>Điện thoại: (024) 3764 3219</p>
+                    <p>Fax: (024) 37643228</p>
+                    <p>Email: mail@tmu.edu.vn</p>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+    
+    <div class="copyright">
+        <p>Copyright © 2022 TMU. All Rights Reserved.</p>
+    </div>
 
     <script>
-        // Sample accounts for login
+        var modal = document.getElementById("loginModal");
+
+        // Lấy nút mở modal
+        var btn = document.getElementById("loginButton");
+
+        // Lấy nút đóng modal
+        var closeBtn = document.getElementsByClassName("close")[0];
+
+        // Khi người dùng nhấn nút "Đăng nhập", hiển thị modal
+        btn.onclick = function(e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+            modal.style.display = "flex"; // Hiển thị modal
+        };
+
+        // Khi người dùng nhấn vào nút đóng (x), ẩn modal
+        closeBtn.onclick = function() {
+            modal.style.display = "none"; // Ẩn modal
+        };
+
+        // Khi người dùng nhấn ra ngoài modal, ẩn modal
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none"; // Ẩn modal
+            }
+        };
+            
+       
+       
+       
+       // Sample accounts for login
         const validAccounts = [
             { username: 'student123', password: 'student@tmu', role: 'student' },
             { username: 'teacher456', password: 'teacher@tmu', role: 'teacher' },
-            { username: 'admin789', password: 'admin@tmu', role: 'admin' }
         ];
 
         // Get form elements
@@ -162,5 +212,7 @@
             }
         });
     </script>
+ 
+
 </body>
 </html>

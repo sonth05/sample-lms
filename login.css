@@ -218,284 +218,269 @@ body {
 
 /* Footer Styles */
 .footer {
+    background-color: #f8f9fa;
+    padding: 40px 0;
     margin-top: auto;
-    background-color: var(--tmu-light-bg);
 }
 
-.footer-content {
-    display: flex;
-    flex-direction: column;
+.footer-container {
+    width: 90%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .footer-logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
+    width: 350px;
+    margin-bottom: auto;
 }
 
-.footer-logo img {
-    height: 70px;
-    margin-right: 15px;
+.footer h2 {
+    color: #000000;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer h3 {
+    color: #000000;
+    text-transform: uppercase;
+    font-size: 14px;
+    margin-bottom: 15px;
 }
 
 .footer-info {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    width: 45%;
 }
 
-.campus {
-    flex: 1;
-    min-width: 250px;
-    margin-bottom: 20px;
+.campus-info {
+    margin-top: 20px;
 }
 
-.campus h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--tmu-blue);
-    margin-bottom: 15px;
+.campus-info h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
-.campus p {
-    margin-bottom: 8px;
+.campus-details p {
+    margin-bottom: 5px;
     color: #555;
     font-size: 14px;
-    line-height: 1.5;
 }
+
 .copyright {
     text-align: center;
-    padding: 15px 0;
-    background-color: var(--tmu-footer-bg);
-    color: #6c757d;
-    font-size: 14px;
-    margin-top: 30px;
-    border-top: 1px solid #e5e5e5;
-}
-
-/* Modal Styles */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.modal-overlay.show {
-    display: block;
-    
-    opacity: 1;
-}
-
-.login-modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.7);
-    z-index: 1001;
-    background: white;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 420px;
-    padding: 30px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    opacity: 0;
-    transition: all 0.3s ease-in-out;
-}
-
-.login-modal.show {
-    display: block;
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.close-modal {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 28px;
-    line-height: 1;
-    padding: 0;
-    cursor: pointer;
-    color: #888;
-    transition: color 0.2s ease-in-out;
-}
-
-.close-modal:hover {
-    color: #333;
-}
-
-.form-title {
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 30px;
-    color: var(--tmu-blue);
-}
-
-.input-group {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.input-group i {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
     color: #777;
+    font-size: 12px;
+    padding: 15px 0;
+    background-color: #f0f2f5;
 }
 
-.input-field {
+
+.login-button {
     width: 100%;
-    padding: 12px 12px 12px 40px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 15px;
-    color: #333;
-    transition: all 0.2s ease-in-out;
-}
-
-.input-field:focus {
-    outline: none;
-    border-color: var(--tmu-blue);
-    box-shadow: 0 0 0 2px rgba(0, 84, 165, 0.25);
-}
-
-.input-field::placeholder {
-    color: #999;
-}
-
-.form-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.remember-me {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #555;
-    cursor: pointer;
-}
-
-.remember-me input[type="checkbox"] {
-    margin: 0;
-    cursor: pointer;
-    width: 16px;
-    height: 16px;
-    accent-color: var(--tmu-blue);
-}
-
-.forgot-password {
-    font-size: 14px;
-    color: var(--tmu-blue);
-    text-decoration: none;
-}
-
-.forgot-password:hover {
-    text-decoration: underline;
-}
-
-.submit-btn {
-    width: 100%;
-    background-color: var(--tmu-blue);
-    color: white;
     padding: 12px;
+    background-color: #0275d8;
+    color: white;
     border: none;
     border-radius: 4px;
     font-size: 16px;
-    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    transition: background-color 0.3s;
 }
 
-.submit-btn:hover {
-    background-color: var(--tmu-blue-hover);
+.login-button:hover {
+    background-color: #025aa5;
 }
 
-.alternative-login {
-    margin-top: 25px;
+.cookie-notice {
+    margin-top: 20px;
     text-align: center;
+    font-size: 14px;
+    color: #666;
 }
 
-.alternative-login p {
-    color: #666;
+.footer {
+    background-color: #f8f9fa;
+    padding: 40px 0;
+    margin-top: auto;
+}
+
+.footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-logo {
+    width: 350px;
+    margin-bottom: auto;
+}
+
+.footer h2 {
+    color: #000000;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer h3 {
+    color: #000000;
+    text-transform: uppercase;
     font-size: 14px;
     margin-bottom: 15px;
+}
+
+.footer-info {
+    width: 45%;
+}
+
+.campus-info {
+    margin-top: 20px;
+}
+
+.campus-info h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.campus-details p {
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 14px;
+}
+
+.copyright {
+    text-align: center;
+    color: #777;
+    font-size: 12px;
+    padding: 15px 0;
+    background-color: #f0f2f5;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    width: 450px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
 }
 
-.alternative-login p::before,
-.alternative-login p::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 30%;
-    height: 1px;
-    background-color: #ddd;
+.modal-content h2 {
+    font-size: 22px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
 }
 
-.alternative-login p::before {
-    left: 0;
-}
-
-.alternative-login p::after {
-    right: 0;
-}
-
-.social-login {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-
-.google-login,
-.office-login {
-    flex: 1;
-    padding: 10px;
+.modal-content input[type="text"],
+.modal-content input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    background: white;
-    color: #555;
-    font-size: 14px;
+    font-size: 15px;
+    background-color: #f0f8ff;
+}
+
+.modal-content input::placeholder {
+    color: #888;
+}
+
+.modal-content button[type="submit"] {
+    width: 100%;
+    background-color: #0098db;
+    color: white;
+    border: none;
+    padding: 12px 0;
+    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.modal-content button[type="submit"]:hover {
+    background-color: #0088cc;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #666;
+    background-color: #fff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.close:hover {
+    color: #333;
+}
+
+/* Checkbox and Remember Me */
+.remember-me {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+    text-align: left;
 }
 
-.google-login:hover,
-.office-login:hover {
-    background-color: #f9f9f9;
-    border-color: #ccc;
+.remember-me input[type="checkbox"] {
+    margin-right: 8px;
 }
 
-.google-login i {
-    color: #DB4437;
+.remember-me label {
+    font-size: 14px;
+    color: #555;
 }
 
-.office-login i {
-    color: #0078d4;
+/* Forgot Password Link */
+.forgot-password {
+    text-align: right;
+    margin-bottom: 20px;
 }
 
+.forgot-password a {
+    color: #0098db;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
 /* Media Queries */
 @media (max-width: 768px) {
     .hero-title {

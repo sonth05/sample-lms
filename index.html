@@ -51,79 +51,89 @@
         </main>
 
         <!-- Login Modal -->
-        <div class="modal-overlay" id="modalOverlay">
-            <div class="login-modal" id="loginModal">
-                <button class="close-modal" id="closeModal">&times;</button>
-                <h2 class="form-title">Đăng nhập vào tài khoản của bạn</h2>
-                <form>
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input type="text" 
-                            placeholder="Tên đăng nhập" 
-                            class="input-field"
-                            autocomplete="username">
+        <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Đăng nhập vào tài khoản của bạn</h2>
+            <form>
+                <input type="text" placeholder="Tên tài khoản" required value="23D190181">
+                <input type="password" placeholder="Mật khẩu" required value="•••••••">
+                
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Nhớ tên tài khoản</label>
                     </div>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" 
-                            placeholder="Mật khẩu" 
-                            class="input-field"
-                            autocomplete="current-password">
+                    <div class="forgot-password">
+                        <a href="#">Quên mật khẩu?</a>
                     </div>
-                    <div class="form-footer">
-                        <label class="remember-me">
-                            <input type="checkbox">
-                            <span>Nhớ tên tài khoản</span>
-                        </label>
-                        <a href="#" class="forgot-password">Quên mật khẩu?</a>
-                    </div>
-                    <button type="submit" class="submit-btn">Đăng nhập</button>
-                </form>
-                <div class="alternative-login">
-                    <p>Hoặc đăng nhập với</p>
-                    <div class="social-login">
-                        <button class="google-login">
-                            <i class="fab fa-google"></i>
-                            Google
-                        </button>
-                        <button class="office-login">
-                            <i class="fab fa-microsoft"></i>
-                            Office 365
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="footer logo.png" alt="TMU Footer Logo">
                 </div>
                 
-                <div class="footer-info">
-                    <div class="campus">
-                        <h3>Cơ sở 1</h3>
-                        <p>Địa chỉ: 79 Hồ Tùng Mậu Cầu Giấy, Hà Nội</p>
-                        <p>Điện thoại: (024) 3764 3219</p>
-                        <p>Fax: (024) 37643228</p>
-                        <p>Email: mail@tmu.edu.vn</p>
-                    </div>
-                    
-                    <div class="campus">
-                        <h3>Cơ sở 2</h3>
-                        <p>Địa chỉ: đường Lý Thường Kiệt, phường Lê Hồng Phong, Phủ Lý, Hà Nam</p>
-                        <p>Điện thoại: (024) 3764 3219</p>
-                        <p>Fax: (024) 37643228</p>
-                        <p>Email: mail@tmu.edu.vn</p>
-                    </div>
+                <button type="submit">Đăng nhập</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <img src="footer logo.png" alt="TMU Logo" class="footer-logo">
+            </div>
+            
+            <div class="campus-info">
+                <h3>Cơ sở 1</h3>
+                <div class="campus-details">
+                    <p>Địa chỉ: 79 Hồ Tùng Mậu Cầu Giấy, Hà Nội</p>
+                    <p>Điện thoại: (024) 3764 3219</p>
+                    <p>Fax: (024) 37643228</p>
+                    <p>Email: mail@tmu.edu.vn</p>
                 </div>
             </div>
             
-            <div class="copyright">
-                <p>Copyright © 2022 TMU. All Rights Reserved.</p>
+            <div class="campus-info">
+                <h3>Cơ sở 2</h3>
+                <div class="campus-details">
+                    <p>Địa chỉ: đường Lý Thường Kiệt, phường Lê Hồng Phong, Phủ Lý, Hà Nam</p>
+                    <p>Điện thoại: (024) 3764 3219</p>
+                    <p>Fax: (024) 37643228</p>
+                    <p>Email: mail@tmu.edu.vn</p>
+                </div>
             </div>
+        </div>
+    </div>
+    
+    <div class="copyright">
+        <p>Copyright © 2022 TMU. All Rights Reserved.</p>
+    </div>
         </footer>
         <script src="login.js"></script>
+        <script>
+            // Lấy phần tử modal
+            var modal = document.getElementById("loginModal");
+        
+            // Lấy nút mở modal
+            var btn = document.getElementById("loginButton");
+        
+            // Lấy nút đóng modal
+            var closeBtn = document.getElementsByClassName("close")[0];
+        
+            // Khi người dùng nhấn nút "Đăng nhập", hiển thị modal
+            btn.onclick = function(e) {
+                e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+                modal.style.display = "flex"; // Hiển thị modal
+            };
+        
+            // Khi người dùng nhấn vào nút đóng (x), ẩn modal
+            closeBtn.onclick = function() {
+                modal.style.display = "none"; // Ẩn modal
+            };
+        
+            // Khi người dùng nhấn ra ngoài modal, ẩn modal
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none"; // Ẩn modal
+                }
+            };
+        </script>
     </body>
     </html>

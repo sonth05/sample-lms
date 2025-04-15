@@ -1,26 +1,28 @@
+/* CSS Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Raleway", sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 body {
-    background-color: #f5f5f5;
+    background-color: #fff;
     color: #333;
-    line-height: 1.6;
-}
-
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 a {
     text-decoration: none;
-    color: #0275d8;
+    color: #0066cc;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 30px 0;
 }
 
 /* Header Styles */
@@ -28,6 +30,12 @@ a {
     background-color: #9c9c9c;
     padding: 10px 0;
     border-bottom: 1px solid #9c9c9c;
+}
+
+.container, .header-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .header-container {
@@ -74,88 +82,116 @@ a {
     color: #fff;
 }
 
-/* Main Navigation */
-.main-nav {
+/* Banner Styles */
+.banner {
     background-color: #9c9c9c;
     color: white;
     padding: 15px 0;
-    border-top: 1px solid #9c9c9c;
 }
 
-.nav-container {
+.banner-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.system-title {
+.banner h2 {
     font-size: 18px;
-    font-weight: bold;
+    font-weight: normal;
+    text-transform: uppercase;
 }
 
 .breadcrumb {
-    text-align: right;
+    color: white;
     font-size: 14px;
 }
 
 .breadcrumb a {
     color: white;
+    margin: 0 5px;
 }
 
-/* Main Content */
-.main-content {
-    padding: 40px 0;
-    min-height: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Main Content Styles */
+main {
+    padding: 30px 0;
+    flex: 1;
 }
 
-.login-container {
+.main-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.password-recovery-section {
     background-color: white;
-    padding: 30px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
+    padding: 0;
+    border-radius: 0;
 }
 
-.login-title {
-    text-align: center;
+.instructions {
     margin-bottom: 30px;
-    font-size: 24px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.search-section h3 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
     font-weight: normal;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-.form-group input {
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-control {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 16px;
-}
-
-.form-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
     font-size: 14px;
 }
 
-.remember-me {
-    display: flex;
-    align-items: center;
+.button-container {
+    margin-top: 15px;
 }
 
-.remember-me input {
-    margin-right: 5px;
+button.search-button {
+    background-color: #0098db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
+button.search-button:hover {
+    background-color: #0088cc;
+}
+
+.search-divider {
+    border-top: 1px solid #ddd;
+    margin: 30px 0;
+}
+
+/* Search Sections */
+.search-title {
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: normal;
+}
 /* Modal Styles */
 .modal {
     display: none;
@@ -337,171 +373,28 @@ a {
     background-color: #f0f2f5;
 }
 
-
-.login-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #0275d8;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.login-button:hover {
-    background-color: #025aa5;
-}
-
-.cookie-notice {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 14px;
-    color: #666;
-}
-
-.footer {
-    background-color: #f8f9fa;
-    padding: 40px 0;
-    margin-top: auto;
-}
-
-.footer-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-}
-
-.footer-logo {
-    width: 350px;
-    margin-bottom: auto;
-}
-
-.footer h2 {
-    color: #000000;
-    text-transform: uppercase;
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.footer h3 {
-    color: #000000;
-    text-transform: uppercase;
-    font-size: 14px;
-    margin-bottom: 15px;
-}
-
-.footer-info {
-    width: 45%;
-}
-
-.campus-info {
-    margin-top: 20px;
-}
-
-.campus-info h3 {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.campus-details p {
-    margin-bottom: 5px;
-    color: #555;
-    font-size: 14px;
-}
-
-.copyright {
-    text-align: center;
-    color: #777;
-    font-size: 12px;
-    padding: 15px 0;
-    background-color: #f0f2f5;
-}
-
-/* Error message */
-.error-message {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    display: none;
-}
-
-/* Sample accounts display */
-.sample-accounts {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #e9f7fe;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.sample-accounts h3 {
-    margin-bottom: 10px;
-    color: #0275d8;
-    font-size: 16px;
-}
-
-.sample-accounts ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.sample-accounts li {
-    margin-bottom: 8px;
-    padding-left: 20px;
-    position: relative;
-}
-
-.sample-accounts li:before {
-    content: "→";
-    position: absolute;
-    left: 0;
-    color: #0275d8;
-}
-
-/* Responsive Adjustments */
+/* Responsive Styles */
 @media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .header-right {
-        margin-top: 10px;
-        width: 100%;
-        justify-content: space-between;
-    }
-    
-    .nav-container {
+    .banner-container {
         flex-direction: column;
         align-items: flex-start;
     }
     
     .breadcrumb {
-        text-align: left;
-        margin-top: 5px;
+        margin-top: 10px;
     }
     
-    .footer-campuses {
+    .campus-container {
         flex-direction: column;
     }
     
-    .campus {
-        margin-bottom: 20px;
+    .campus-info {
+        width: 100%;
+        margin-bottom: 30px;
     }
     
-    .logo {
-        width: 220px;
-        height: auto;
-    }
-    
-    .footer-logo-img {
-        width: 280px;
-        height: auto;
+    .modal-content {
+        width: 90%;
+        max-width: 400px;
     }
 }
