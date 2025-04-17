@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Management - Xuất Báo Cáo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .sidebar {
+            background-color: #222;
+            color: white;
+            width: 290px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+        .header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #0078d7;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .header-text {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-item.active {
+            border-left: 3px solid #0078d7;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-icon {
+            width: 25px;
+            height: 25px;
+            background-color: #444;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content {
+            margin-left: 290px;
+            padding: 20px;
+        }
+
+        .toggle {
+            background-color: #0078d7;
+            border-radius: 15px;
+            width: 50px;
+            height: 25px;
+            position: relative;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .toggle-circle {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            left: 25px;
+            top: 2.5px;
+        }
+
+        .page-title {
+            color: #666;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            width: 200px;
+            font-weight: bold;
+        }
+
+        .info-value {
+            flex: 1;
+        }
+
+        .instructions {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        .red-text {
+            color: red;
+        }
+
+        .button-row {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #337ab7;
+            color: white;
+            border-color: #2e6da4;
+        }
+
+        .btn-warning {
+            background-color: #f0ad4e;
+            color: white;
+            border-color: #eea236;
+        }
+
+        .btn-success {
+            background-color: #5cb85c;
+            color: white;
+            border-color: #4cae4c;
+        }
+
+        .btn-danger {
+            background-color: #d9534f;
+            color: white;
+            border-color: #d43f3a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .dropdown-content {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .caret {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: 5px;
+            vertical-align: middle;
+            border-top: 4px dashed;
+            border-right: 4px solid transparent;
+            border-left: 4px solid transparent;
+        }
+        
+        .format-options {
+            margin-top: 15px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        
+        .format-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .format-selection {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .report-option {
+            margin-bottom: 15px;
+        }
+        
+        .report-dropdown {
+            width: 350px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="header">
+            <div class="logo">TM</div>
+            <div class="header-text">SCORE MANAGEMENT</div>
+        </div>
+        
+        <div class="menu-item">
+            <div class="menu-icon">O</div>
+            <div>THÔNG TIN CÁ NHÂN</div>
+        </div>
+        
+        <div class="menu-item">
+            <a href="giangvien.html" style="text-decoration: none; color: inherit;">                                 
+                <div class="menu-icon">□</div>
+                <div>QUẢN LÝ ĐIỂM</div>
+            </a>
+        </div>
+        
+        <div class="menu-item">
+            <a href="TKKH.html" style="text-decoration: none; color: inherit;">                                         
+                <div class="menu-icon">□</div>
+                <div>TÌM KIẾM KHÓA HỌC </div>
+            </a>
+        </div>
+
+
+        <div class="menu-item">
+            <a href="baocao.html" style="text-decoration: none; color: inherit;">
+                <div class="menu-icon">□</div>
+                <div>XUẤT BÁO CÁO</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="page-title">
+            <div>
+                <div class="toggle">
+                    <div class="toggle-circle"></div>
+                </div>
+                Xuất báo cáo
+            </div>
+            <div>1287 | Lê Viết Hà ▼</div>
+        </div>
+        
+        <div class="info-row">
+            <div class="info-label">Năm học:</div>
+            <div class="info-value">2024-2025</div>
+            <div class="info-label" style="margin-left: 100px;">Học kỳ:</div>
+            <div class="info-value">Học kỳ 2</div>
+        </div>
+        
+        <div class="info-row">
+            <div class="info-label">Học phần:</div>
+            <div class="info-value">Triển khai Hệ thống thông tin quản lý</div>
+            <div class="info-label" style="margin-left: 100px;">Mã lớp học phần:</div>
+            <div class="info-value">242_eCIT4011_02</div>
+        </div>
+        
+        <div class="instructions">
+            <div class="red-text">Hướng dẫn xuất báo cáo:</div>
+            <div class="red-text">(1) Chọn báo cáo: Giảng viên chọn loại báo cáo cần xuất</div>
+            <div class="red-text">(2) Chọn định dạng: Giảng viên chọn định dạng file xuất (PDF, Excel)</div>
+            <div class="red-text">(3) Xuất báo cáo: Hệ thống sẽ xuất báo cáo theo định dạng đã chọn</div>
+        </div>
+        
+        <div class="report-option">
+            <div class="info-label">Chọn báo cáo:</div>
+            <select class="report-dropdown">
+                <option value="">-- Chọn báo cáo --</option>
+                <option value="attendance">Báo cáo điểm danh</option>
+                <option value="midterm">Báo cáo điểm giữa kỳ</option>
+                <option value="final">Báo cáo điểm cuối kỳ</option>
+                <option value="complete">Báo cáo điểm tổng kết</option>
+                <option value="stats">Báo cáo thống kê điểm</option>
+            </select>
+        </div>
+        
+        <div class="format-options">
+            <div class="format-title">Chọn định dạng file:</div>
+            <div class="format-selection">
+                <label>
+                    <input type="radio" name="format" value="pdf" checked> PDF
+                </label>
+                <label>
+                    <input type="radio" name="format" value="excel"> Excel
+                </label>
+                <label>
+                    <input type="radio" name="format" value="csv"> CSV
+                </label>
+            </div>
+        </div>
+        
+        <div class="button-row">
+            <button class="btn btn-primary">XEM TRƯỚC BÁO CÁO</button>
+            <button class="btn btn-success">XUẤT BÁO CÁO</button>
+            <button class="btn btn-warning">HỦY</button>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>MÃ BÁO CÁO</th>
+                    <th>TÊN BÁO CÁO</th>
+                    <th>MÔ TẢ</th>
+                    <th>NGÀY TẠO</th>
+                    <th>TRẠNG THÁI</th>
+                    <th>THAO TÁC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>BC001</td>
+                    <td>Báo cáo điểm danh lớp 242_eCIT4011_02</td>
+                    <td>Thống kê điểm danh học kỳ 2</td>
+                    <td>12/04/2025</td>
+                    <td>Hoàn thành</td>
+                    <td><button class="btn btn-primary">Tải xuống</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>BC002</td>
+                    <td>Báo cáo điểm quá trình lớp 242_eCIT4011_02</td>
+                    <td>Thống kê điểm quá trình học kỳ 2</td>
+                    <td>10/04/2025</td>
+                    <td>Hoàn thành</td>
+                    <td><button class="btn btn-primary">Tải xuống</button></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>BC003</td>
+                    <td>Báo cáo tổng kết lớp 242_eCIT4011_02</td>
+                    <td>Thống kê điểm tổng kết học kỳ 2</td>
+                    <td>05/04/2025</td>
+                    <td>Hoàn thành</td>
+                    <td><button class="btn btn-primary">Tải xuống</button></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>BC004</td>
+                    <td>Thống kê phân bố điểm lớp 242_eCIT4011_02</td>
+                    <td>Phân bố điểm học kỳ 2</td>
+                    <td>01/04/2025</td>
+                    <td>Hoàn thành</td>
+                    <td><button class="btn btn-primary">Tải xuống</button></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>BC005</td>
+                    <td>Báo cáo điểm KT1 lớp 242_eCIT4011_02</td>
+                    <td>Thống kê điểm KT1 học kỳ 2</td>
+                    <td>28/03/2025</td>
+                    <td>Hoàn thành</td>
+                    <td><button class="btn btn-primary">Tải xuống</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

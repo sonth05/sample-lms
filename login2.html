@@ -154,63 +154,68 @@
                 modal.style.display = "none"; // Ẩn modal
             }
         };
-            
+        </script>     
        
        
-       
+        <script>       
        // Sample accounts for login
-        const validAccounts = [
-            { username: 'student123', password: 'student@tmu', role: 'student' },
-            { username: 'teacher456', password: 'teacher@tmu', role: 'teacher' },
-        ];
+       // Sample accounts for login
+const validAccounts = [
+    { username: 'student123', password: 'student@tmu', role: 'student' },
+    { username: 'teacher456', password: 'teacher@tmu', role: 'teacher' },
+];
 
-        // Get form elements
-        const loginForm = document.getElementById('login-form');
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
-        const errorMessage = document.getElementById('error-message');
-        const rememberCheckbox = document.getElementById('remember');
+// Get form elements
+const loginForm = document.getElementById('login-form');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const errorMessage = document.getElementById('error-message');
+const rememberCheckbox = document.getElementById('remember');
 
-        // Check if there's a remembered username
-        if (localStorage.getItem('rememberedUsername')) {
-            usernameInput.value = localStorage.getItem('rememberedUsername');
-            rememberCheckbox.checked = true;
+// Check if there's a remembered username
+if (localStorage.getItem('rememberedUsername')) {
+    usernameInput.value = localStorage.getItem('rememberedUsername');
+    rememberCheckbox.checked = true;
+}
+
+// Handle form submission
+loginForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+    
+    // Check if credentials are valid
+    const validAccount = validAccounts.find(account => 
+        account.username === username && account.password === password
+    );
+    
+    if (validAccount) {
+        // Save username if "remember me" is checked
+        if (rememberCheckbox.checked) {
+            localStorage.setItem('rememberedUsername', username);
+        } else {
+            localStorage.removeItem('rememberedUsername');
         }
-
-        // Handle form submission
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const username = usernameInput.value.trim();
-            const password = passwordInput.value.trim();
-            
-            // Check if credentials are valid
-            const validAccount = validAccounts.find(account => 
-                account.username === username && account.password === password
-            );
-            
-            if (validAccount) {
-                // Save username if "remember me" is checked
-                if (rememberCheckbox.checked) {
-                    localStorage.setItem('rememberedUsername', username);
-                } else {
-                    localStorage.removeItem('rememberedUsername');
-                }
-                
-                // Store user info in session storage
-                sessionStorage.setItem('currentUser', JSON.stringify({
-                    username: validAccount.username,
-                    role: validAccount.role
-                }));
-                
-                // Redirect to dashboard page (would be to the actual dashboard page in a real implementation)
-                window.location.href = 'main.html';
-            } else {
-                // Show error message
-                errorMessage.style.display = 'block';
-                passwordInput.value = ''; // Clear password field
-            }
-        });
+        
+        // Store user info in session storage
+        sessionStorage.setItem('currentUser', JSON.stringify({
+            username: validAccount.username,
+            role: validAccount.role
+        }));
+        
+        // Redirect based on user role
+        if (validAccount.role === 'student') {
+            window.location.assign('main.html');
+        } else if (validAccount.role === 'teacher') {
+            window.location.assign('gvmain.html');
+        }
+    } else {
+        // Show error message
+        errorMessage.style.display = 'block';
+        passwordInput.value = ''; // Clear password field
+    }
+});
     </script>
  
 

@@ -248,6 +248,16 @@
             color: #666;
             margin-top: 3px;
         }
+        
+        /* Highlight for teacher interface option */
+        .dropdown-item.teacher-interface {
+            background-color: #f0f7ff;
+            border-left: 3px solid #0066cc;
+        }
+        
+        .dropdown-item.teacher-interface:hover {
+            background-color: #e0f0ff;
+        }
     </style>
 </head>
 <body>
@@ -275,21 +285,13 @@
                         <span class="dropdown-icon">👤</span>
                         Trang cá nhân
                     </a>
-                    <a href="#" class="dropdown-item">
-                        <span class="dropdown-icon">📋</span>
-                        Điểm số
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <span class="dropdown-icon">💬</span>
-                        Tin nhắn
+                    <a href="giangvien.html" class="dropdown-item teacher-interface" id="teacherInterfaceBtn">
+                        <span class="dropdown-icon">👨‍🏫</span>
+                        Quản lý điểm số
                     </a>
                     <a href="#" class="dropdown-item">
                         <span class="dropdown-icon">⚙️</span>
                         Cài đặt
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <span class="dropdown-icon">📱</span>
-                        Ứng dụng di động
                     </a>
                     <a href="#" class="dropdown-item">
                         <span class="dropdown-icon">❓</span>
@@ -440,6 +442,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const userDropdownBtn = document.getElementById('userDropdownBtn');
             const userDropdown = document.getElementById('userDropdown');
+            const teacherInterfaceBtn = document.getElementById('teacherInterfaceBtn');
             
             // Toggle dropdown when clicking on user avatar
             userDropdownBtn.addEventListener('click', function() {
@@ -453,6 +456,17 @@
                         userDropdown.classList.remove('show');
                     }
                 }
+            });
+            
+            // Function to navigate to teacher interface
+            teacherInterfaceBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Redirect to teacher interface (replace with actual URL)
+                window.location.href = 'giangvien.html';
+                
+                // Alternatively, you could use AJAX to load the new interface without a full page reload
+                // For demo purposes, alert the user
+                alert('Đang chuyển sang giao diện giảng viên...');
             });
         });
     </script>

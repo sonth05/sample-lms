@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScoreManagements</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background-color: #222;
+            color: white;
+            padding: 20px 0;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #444;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            background-color: #0088cc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .header-text {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .menu-item:hover {
+            background-color: #333;
+        }
+        
+        .menu-item.active {
+            background-color: #444;
+            border-left: 4px solid #0088cc;
+            padding-left: 16px;
+        }
+        
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            border-radius: 50%;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .page-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .toggle {
+            width: 50px;
+            height: 24px;
+            background-color: #0088cc;
+            border-radius: 12px;
+            position: relative;
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .toggle-circle {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 28px;
+        }
+
+        .search-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .search-row {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .search-label {
+            width: 120px;
+            font-weight: bold;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .search-dropdown {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+        }
+
+        .search-button {
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .search-button:hover {
+            background-color: #006699;
+        }
+
+        .results-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 5px;
+            color: white;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+        }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+
+        .btn-view {
+            background-color: #28a745;
+        }
+
+        .btn-view:hover {
+            background-color: #218838;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="header">
+            <div class="logo">TM</div>
+            <div class="header-text">SCORE MANAGEMENT</div>
+        </div>
+        
+        <div class="menu-item">
+            <div class="menu-icon">O</div>
+            <div>THÔNG TIN CÁ NHÂN</div>
+        </div>
+        
+        <div class="menu-item">
+            <a href="giangvien.html" style="text-decoration: none; color: inherit;">                                 
+                <div class="menu-icon">□</div>
+                <div>QUẢN LÝ ĐIỂM</div>
+            </a>
+        </div>
+        
+        <div class="menu-item">
+            <a href="TKKH.html" style="text-decoration: none; color: inherit;">                                         
+                <div class="menu-icon">□</div>
+                <div>TÌM KIẾM KHÓA HỌC </div>
+            </a>
+        </div>
+
+
+        <div class="menu-item">
+            <a href="baocao.html" style="text-decoration: none; color: inherit;">
+                <div class="menu-icon">□</div>
+                <div>XUẤT BÁO CÁO</div>
+            </a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="page-title">
+            <div>
+                <div class="toggle">
+                    <div class="toggle-circle"></div>
+                </div>
+                Tìm kiếm khóa học
+            </div>
+            <div>1287 | Lê Viết Hà ▼</div>
+        </div>
+        
+        <div class="search-container">
+            <div class="search-row">
+                <div class="search-label">Năm học:</div>
+                <select class="search-dropdown">
+                    <option>2024-2025</option>
+                    <option>2023-2024</option>
+                    <option>2022-2023</option>
+                </select>
+                
+                <div class="search-label" style="margin-left: 40px;">Học kỳ:</div>
+                <select class="search-dropdown">
+                    <option>Tất cả</option>
+                    <option>Học kỳ 1</option>
+                    <option selected>Học kỳ 2</option>
+                    <option>Học kỳ hè</option>
+                </select>
+            </div>
+            
+            <div class="search-row">
+                <div class="search-label">Mã học phần:</div>
+                <input type="text" class="search-input" placeholder="Nhập mã học phần...">
+                
+                <div class="search-label" style="margin-left: 40px;">Tên học phần:</div>
+                <input type="text" class="search-input" placeholder="Nhập tên học phần...">
+            </div>
+            
+            <div class="search-row">
+                <div class="search-label">Mã lớp học phần:</div>
+                <input type="text" class="search-input" placeholder="Nhập mã lớp học phần...">
+            </div>
+            
+            <div class="search-row" style="justify-content: center;">
+                <button class="search-button">TÌM KIẾM</button>
+            </div>
+        </div>
+        
+        <div class="results-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>MÃ HỌC PHẦN</th>
+                        <th>TÊN HỌC PHẦN</th>
+                        <th>MÃ LỚP HỌC PHẦN</th>
+                        <th>THỜI GIAN HỌC</th>
+                        <th>TRẠNG THÁI</th>
+                        <th>THAO TÁC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>eCIT4011</td>
+                        <td>Triển khai Hệ thống thông tin quản lý</td>
+                        <td>242_eCIT4011_02</td>
+                        <td>Tiết: 7-9, Thứ 3</td>
+                        <td>Đang diễn ra</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-info">Chi tiết</button>
+                                <button class="btn btn-view">Nhập điểm</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>eCIT2621</td>
+                        <td>Phát triển hệ thống thông tin kinh tế</td>
+                        <td>242_eCIT2621_02</td>
+                        <td>Tiết: 4-6, Thứ 2</td>
+                        <td>Đang diễn ra</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-info">Chi tiết</button>
+                                <button class="btn btn-view">Nhập điểm</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>RLCP1211</td>
+                        <td>Kinh tế chính trị Mác - Lênin</td>
+                        <td>242_RLCP1211_32</td>
+                        <td>Tiết: 7-9, Thứ 5</td>
+                        <td>Đang diễn ra</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-info">Chi tiết</button>
+                                <button class="btn btn-view">Nhập điểm</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>eCIT2711</td>
+                        <td>Quản trị cơ sở dữ liệu</td>
+                        <td>242_eCIT2711_01</td>
+                        <td>Tiết: 10-12, Thứ 4</td>
+                        <td>Đang diễn ra</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-info">Chi tiết</button>
+                                <button class="btn btn-view">Nhập điểm</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>INFO1311</td>
+                        <td>Cấu trúc dữ liệu và giải thuật</td>
+                        <td>242_INFO1311_01</td>
+                        <td>Tiết: 10-12, Thứ 6</td>
+                        <td>Đang diễn ra</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-info">Chi tiết</button>
+                                <button class="btn btn-view">Nhập điểm</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
