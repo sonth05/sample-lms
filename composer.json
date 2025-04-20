@@ -1,0 +1,14 @@
+{
+    "name": "nhom4/sample-lms",
+    "description": "A simple Learning Management System for teachers to manage courses and student scores.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "nhom4"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "phpoffice/phpspreadsheet": "^4.2"
+    }
+}
