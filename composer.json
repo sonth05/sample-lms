@@ -9,6 +9,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "phpoffice/phpspreadsheet": "^4.2"
+        "phpoffice/phpspreadsheet": "^4.2",
+        "phpmailer/phpmailer": "^6.10"
     }
 }

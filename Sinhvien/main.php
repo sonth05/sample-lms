@@ -2,7 +2,6 @@
 session_start();
 require '../db.php';
 
-
 // Nếu chưa đăng nhập, chuyển về trang login
 if (!isset($_SESSION['username'])) {
     header("Location: login2.php");
@@ -10,6 +9,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 $username = $_SESSION['username'];
+$search_term = $_GET['search'] ?? '';
 
 // Truy vấn danh sách khóa học mà sinh viên đã tham gia
 $sql = "SELECT DISTINCT c.Course_Name, c.Course_Description
@@ -17,8 +17,16 @@ $sql = "SELECT DISTINCT c.Course_Name, c.Course_Description
         JOIN course c ON s.Course_ID = c.Course_ID
         JOIN taikhoan tk ON s.User_ID = tk.Person_ID
         WHERE tk.Username = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
+
+if (!empty($search_term)) {
+    $sql .= " AND (c.Course_Name LIKE CONCAT('%', ?, '%') OR c.Course_Description LIKE CONCAT('%', ?, '%'))";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $username, $search_term, $search_term);
+} else {
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+}
+
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -33,10 +41,9 @@ while ($row = $result->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thuongmai University LMS</title>
-    <link rel="stylesheet" href="main.css"> <!-- Nếu bạn có CSS riêng -->
+    <link rel="stylesheet" href="main.css">
     <style>
-        /* (Copy toàn bộ phần CSS bạn đã có ở main.html vào đây nếu không dùng file CSS riêng) */
-        <?php include 'main-style-inline.css'; // hoặc paste trực tiếp nếu cần ?>
+        <?php include 'main-style-inline.css'; ?>
     </style>
 </head>
 <body>
@@ -44,9 +51,7 @@ while ($row = $result->fetch_assoc()) {
         <div class="logo">
             <img src="../Assets/footer logo.png" alt="Thuongmai University Logo">
         </div>
-        <div class="language-selector">
-            VIETNAMESE (VI) ▼
-        </div>
+        <div class="language-selector">VIETNAMESE (VI) ▼</div>
         <div class="user-actions">
             <div class="notification_icon"></div>
             <button class="action-button">?</button>
@@ -60,13 +65,13 @@ while ($row = $result->fetch_assoc()) {
                         <div class="user-name"><?= htmlspecialchars($username) ?></div>
                         <div class="user-email"><?= htmlspecialchars($username) ?>@tmuedu.vn</div>
                     </div>
-                    <a href="#" class="dropdown-item"><span class="dropdown-icon">👤</span>Trang cá nhân</a>
-                    <a href="#" class="dropdown-item"><span class="dropdown-icon">📋</span>Điểm số</a>
-                    <a href="#" class="dropdown-item"><span class="dropdown-icon">💬</span>Tin nhắn</a>
-                    <a href="#" class="dropdown-item"><span class="dropdown-icon">⚙️</span>Cài đặt</a>
-                    <a href="#" class="dropdown-item"><span class="dropdown-icon">📱</span>Ứng dụng di động</a>
-                    <a href="#" class="dropdown-item"><span class="dropdown-icon">❓</span>Trợ giúp</a>
-                    <a href="logout.php" class="dropdown-item"><span class="dropdown-icon">🚪</span>Đăng xuất</a>
+                    <a href="#" class="dropdown-item">👤 Trang cá nhân</a>
+                    <a href="#" class="dropdown-item">📋 Điểm số</a>
+                    <a href="#" class="dropdown-item">💬 Tin nhắn</a>
+                    <a href="#" class="dropdown-item">⚙️ Cài đặt</a>
+                    <a href="#" class="dropdown-item">📱 Ứng dụng di động</a>
+                    <a href="#" class="dropdown-item">❓ Trợ giúp</a>
+                    <a href="logout.php" class="dropdown-item">🚪 Đăng xuất</a>
                 </div>
             </div>
         </div>
@@ -74,13 +79,17 @@ while ($row = $result->fetch_assoc()) {
 
     <div class="main-content">
         <div class="left-panel">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <h2>Khóa học</h2>
                 <button class="button">
                     <span class="button-icon">▾</span>
                     Tất cả (ngoại trừ Ẩn)
                 </button>
             </div>
+
+            <form method="GET" style="margin-bottom: 15px;">
+                <input type="text" name="search" placeholder="🔍 Tìm khóa học..." value="<?= htmlspecialchars($search_term) ?>" style="width: 30%; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+            </form>
 
             <div class="empty-courses">
                 <?php if (count($courses) === 0): ?>
@@ -105,18 +114,11 @@ while ($row = $result->fetch_assoc()) {
         </div>
 
         <div class="right-panel">
-            <!-- Dòng thời gian -->
             <div class="panel">
                 <h3 class="panel-title">Dòng thời gian</h3>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                    <button class="button" style="padding: 5px 10px; font-size: 14px;">
-                        <span>⏱</span>
-                        <span class="button-icon">▾</span>
-                    </button>
-                    <button class="button" style="padding: 5px 10px; font-size: 14px;">
-                        <span>⫶</span>
-                        <span class="button-icon">▾</span>
-                    </button>
+                    <button class="button" style="padding: 5px 10px; font-size: 14px;">⏱ ▾</button>
+                    <button class="button" style="padding: 5px 10px; font-size: 14px;">⫶ ▾</button>
                 </div>
                 <div style="display: flex; justify-content: center; padding: 30px 0;">
                     <svg width="50" height="50" viewBox="0 0 24 24">
@@ -126,26 +128,20 @@ while ($row = $result->fetch_assoc()) {
                 <p style="text-align: center; color: #777;">Không có hoạt động sắp tới hạn</p>
             </div>
 
-            <!-- Sự kiện -->
             <div class="panel">
                 <h3 class="panel-title">Sự kiện sắp diễn ra</h3>
                 <p style="color: #777;">Không có sự kiện nào sắp diễn ra</p>
                 <p style="color: #777;">Đi đến lịch ...</p>
             </div>
 
-            <!-- Lịch -->
             <div class="panel">
                 <h3 class="panel-title">Lịch</h3>
                 <div class="month-nav">
-                    <span>◄</span>
-                    <span>Tháng 4 - 2025</span>
-                    <span>►</span>
+                    <span>◄</span><span>Tháng 4 - 2025</span><span>►</span>
                 </div>
                 <table class="calendar">
                     <thead>
-                        <tr>
-                            <th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>CN</th>
-                        </tr>
+                        <tr><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>CN</th></tr>
                     </thead>
                     <tbody>
                         <tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>

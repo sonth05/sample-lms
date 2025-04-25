@@ -2,13 +2,12 @@
 session_start();
 require 'db.php';
 
-// Xử lý khi form được submit
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
     $remember = $_POST['remember'] ?? '';
 
-    $sql = "SELECT tk.Username, tk.Password, u.Role 
+    $sql = "SELECT tk.Username, tk.Password, tk.Failed_Attempts, tk.Is_Locked, u.Role 
             FROM taikhoan tk 
             JOIN user u ON tk.Person_ID = u.Person_ID 
             WHERE tk.Username = ?";
@@ -19,25 +18,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $login_success = false;
     $role = '';
+    $error = '';
 
     if ($row = $result->fetch_assoc()) {
-        if ($password === $row['Password']) { // Nếu có hash thì dùng password_verify()
-            $_SESSION['username'] = $row['Username'];
-            $_SESSION['role'] = $row['Role'];
+        if ($row['Is_Locked']) {
+            $error = 'locked';
+        } elseif ($password === $row['Password']) {
             $login_success = true;
             $role = strtolower($row['Role']);
+            $_SESSION['username'] = $row['Username'];
+            $_SESSION['role'] = $row['Role'];
+
+            $resetAttempts = $conn->prepare("UPDATE taikhoan SET Failed_Attempts = 0 WHERE Username = ?");
+            $resetAttempts->bind_param("s", $username);
+            $resetAttempts->execute();
+        } else {
+            $attempts = $row['Failed_Attempts'] + 1;
+            $is_locked = $attempts >= 5 ? 1 : 0;
+
+            $updateStmt = $conn->prepare("UPDATE taikhoan SET Failed_Attempts = ?, Is_Locked = ? WHERE Username = ?");
+            $updateStmt->bind_param("iis", $attempts, $is_locked, $username);
+            $updateStmt->execute();
+
+            $error = $is_locked ? 'locked' : 'invalid';
         }
+    } else {
+        $error = 'invalid';
     }
 
-    // Trả kết quả dạng JSON cho JS xử lý
     header('Content-Type: application/json');
     echo json_encode([
         'success' => $login_success,
-        'role' => $role
+        'role' => $role,
+        'error' => $error
     ]);
     exit;
 }
 ?>
+
 
 <!-- Giao diện HTML phía dưới không thay đổi -->
 <!DOCTYPE html>
@@ -103,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="checkbox" id="remember" name="remember">
                         <label for="remember">Nhớ tên tài khoản</label>
                     </div>
-                    <a href="forgotps.html" class="forgot-password">Quên mật khẩu?</a>
+                    <a href="forgotps.php" class="forgot-password">Quên mật khẩu?</a>
                 </div>
                 <button type="submit" class="login-button">Đăng nhập</button>
             </form>
@@ -113,20 +131,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <script>
+document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('login-form');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const rememberCheckbox = document.getElementById('remember');
     const errorMessage = document.getElementById('error-message');
 
-    // Load username từ localStorage nếu có
+    // Load username nếu đã lưu trong localStorage
     if (localStorage.getItem('rememberedUsername')) {
         usernameInput.value = localStorage.getItem('rememberedUsername');
         rememberCheckbox.checked = true;
     }
 
-    loginForm.addEventListener('submit', async function(event) {
+    loginForm.addEventListener('submit', async function (event) {
         event.preventDefault();
+
         const username = usernameInput.value.trim();
         const password = passwordInput.value.trim();
 
@@ -140,32 +160,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 method: 'POST',
                 body: formData
             });
+
             const data = await response.json();
 
             if (data.success) {
-                // Lưu localStorage nếu được chọn
+                // ✅ Ghi nhớ tài khoản nếu được chọn
                 if (rememberCheckbox.checked) {
                     localStorage.setItem('rememberedUsername', username);
                 } else {
                     localStorage.removeItem('rememberedUsername');
                 }
 
-                // Chuyển trang theo vai trò
+                // ✅ Chuyển trang theo vai trò
                 if (data.role === 'student') {
                     window.location.href = 'Sinhvien/main.php';
                 } else if (data.role === 'teacher') {
                     window.location.href = 'giangVien/main.php';
-
                 }
             } else {
+                // ❌ Xử lý lỗi
+                if (data.error === 'locked') {
+                    errorMessage.textContent = 'Tài khoản đã bị khoá do nhập sai quá 5 lần.';
+                } else if (data.error === 'invalid') {
+                    errorMessage.textContent = 'Tên tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại.';
+                } else {
+                    errorMessage.textContent = 'Đã xảy ra lỗi. Vui lòng thử lại.';
+                }
+
                 errorMessage.style.display = 'block';
                 passwordInput.value = '';
             }
+
         } catch (error) {
             console.error('Lỗi gửi form:', error);
+            errorMessage.textContent = 'Không thể kết nối tới máy chủ. Vui lòng thử lại sau.';
             errorMessage.style.display = 'block';
         }
     });
-    </script>
+});
+</script>
+
 </body>
 </html>
