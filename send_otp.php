@@ -30,7 +30,7 @@ function sendOTP($toEmail, $otp) {
 
         // Nội dung email
         $mail->isHTML(true);
-        $mail->Subject = 'Mã OTP đặt lại mật khẩu - TMU LMS';
+        $mail->Subject = 'RESET PASSWORD - TMU LMS';
         $mail->Body    = "<p>Xin chào,</p>
                           <p>Đây là mã OTP của bạn để đặt lại mật khẩu:</p>
                           <h2>$otp</h2>

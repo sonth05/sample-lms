@@ -21,32 +21,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_scores'])) {
     $score3Arr = $_POST['score3'] ?? [];
     $score4Arr = $_POST['score4'] ?? [];
 
-    $studentsQuery = "SELECT u.Person_ID FROM user u
-                      JOIN taikhoan tk ON tk.Person_ID = u.Person_ID
-                      JOIN score s ON s.User_ID = u.Person_ID
-                      WHERE s.Course_ID = ?";
-    $studentsStmt = $conn->prepare($studentsQuery);
-    $studentsStmt->bind_param("i", $course_id);
-    $studentsStmt->execute();
-    $studentsResult = $studentsStmt->get_result();
-    $studentRows = $studentsResult->fetch_all(MYSQLI_ASSOC);
-
-    foreach ($studentRows as $i => $row) {
-        $userId = $row['Person_ID'];
-        $s1 = floatval($score1Arr[$i] ?? 0);
-        $s2 = floatval($score2Arr[$i] ?? 0);
-        $s3 = floatval($score3Arr[$i] ?? 0);
-        $s4 = floatval($score4Arr[$i] ?? 0);
-
-        $updateQuery = "UPDATE score SET Score1 = ?, Score2 = ?, Score3 = ?, Score4 = ? 
-                        WHERE User_ID = ? AND Course_ID = ?";
-        $updateStmt = $conn->prepare($updateQuery);
-        $updateStmt->bind_param("ddddii", $s1, $s2, $s3, $s4, $userId, $course_id);
-        $updateStmt->execute();
+    // 1) validate all scores
+    $invalid = false;
+    foreach ($score1Arr as $i => $v) {
+        $vals = [
+            floatval($score1Arr[$i] ?? 0),
+            floatval($score2Arr[$i] ?? 0),
+            floatval($score3Arr[$i] ?? 0),
+            floatval($score4Arr[$i] ?? 0),
+        ];
+        foreach ($vals as $vv) {
+            if ($vv < 0 || $vv > 10) {
+                $invalid = true;
+                break 2;
+            }
+        }
     }
 
-    echo "<script>alert('✅ Đã lưu điểm thành công!');</script>";
+    if ($invalid) {
+        echo "<script>alert('❌ Điểm nhập không hợp lệ! Mọi giá trị phải nằm trong khoảng 0–10.');</script>";
+    } else {
+        // 2) lấy danh sách sinh viên
+        $studentsQuery = "SELECT u.Person_ID FROM user u
+                          JOIN taikhoan tk ON tk.Person_ID = u.Person_ID
+                          JOIN score s ON s.User_ID = u.Person_ID
+                          WHERE s.Course_ID = ?";
+        $studentsStmt = $conn->prepare($studentsQuery);
+        $studentsStmt->bind_param("i", $course_id);
+        $studentsStmt->execute();
+        $studentRows = $studentsStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        // 3) cập nhật từng sinh viên, tính Score5
+        $updateQuery = "UPDATE score 
+                        SET Score1 = ?, Score2 = ?, Score3 = ?, Score4 = ?, Score5 = ?
+                        WHERE User_ID = ? AND Course_ID = ?";
+        $updateStmt = $conn->prepare($updateQuery);
+
+        foreach ($studentRows as $i => $row) {
+            $userId = $row['Person_ID'];
+            $s1 = floatval($score1Arr[$i]);
+            $s2 = floatval($score2Arr[$i]);
+            $s3 = floatval($score3Arr[$i]);
+            $s4 = floatval($score4Arr[$i]);
+            // Tính Score5 theo tỉ lệ
+            $s5 = $s1*0.1 + $s2*0.15 + $s3*0.15 + $s4*0.6;
+
+            // gán 7 tham số: 4 điểm, điểm tổng Score5, userId, courseId
+            $updateStmt->bind_param("dddddii", $s1, $s2, $s3, $s4, $s5, $userId, $course_id);
+            $updateStmt->execute();
+        }
+
+        echo "<script>alert('✅ Đã lưu điểm thành công!');</script>";
+    }
 }
+
 
 // Lấy thông tin giảng viên và khóa học
 $infoQuery = "SELECT u.Person_Name, u.Person_ID, c.Course_Name, c.Class_Code, c.Schedule
