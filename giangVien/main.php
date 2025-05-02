@@ -25,7 +25,7 @@ $accountID = $userData['Account_ID'];
 
 // Lấy danh sách khóa học phụ trách
 $courses = [];
-$courseQuery = "SELECT Course_Name, Course_Description
+$courseQuery = "SELECT Course_Name, Course_Description, Course_ID
                 FROM course
                 WHERE Teacher_ID = (SELECT Person_ID FROM taikhoan WHERE Username = ?)";
 $stmt = $conn->prepare($courseQuery);
@@ -39,7 +39,7 @@ while ($row = $result->fetch_assoc()) {
 // Kết quả tìm kiếm
 $searchResults = [];
 if (!empty($searchTerm)) {
-    $searchQuery = "SELECT Course_Name, Course_Description FROM course
+    $searchQuery = "SELECT Course_Name, Course_Description, Course_ID FROM course
                     WHERE Course_Name LIKE CONCAT('%', ?, '%') 
                        OR Course_Description LIKE CONCAT('%', ?, '%')";
     $stmt = $conn->prepare($searchQuery);
@@ -92,39 +92,29 @@ if (!empty($searchTerm)) {
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h2>Khóa học phụ trách</h2>
                 <form method="GET" style="display: flex; align-items: center;">
-                    <input type="text" name="search" value="<?= htmlspecialchars($searchTerm) ?>" placeholder="Tìm tên khóa học..." style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 5px; margin-left: 10px;">
+                    <input type="text" name="search" value="<?= htmlspecialchars($searchTerm) ?>" placeholder="🔍 Tìm khóa học..." style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 5px; margin-left: 10px;">
                 </form>
             </div>
 
-            <?php if (!empty($searchTerm)): ?>
-           
-                <ul style="padding: 0 10px;">
-                    <?php foreach ($searchResults as $result): ?>
-                        <li style="margin-bottom: 15px; list-style: none; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
-                            <strong><?= htmlspecialchars($result['Course_Name']) ?></strong><br>
-                            <small><?= htmlspecialchars($result['Course_Description']) ?></small>
-                        </li>
-                    <?php endforeach; ?>
-                    <?php if (count($searchResults) === 0): ?>
-                        <li style="color: #888;">Không tìm thấy khóa học phù hợp.</li>
-                    <?php endif; ?>
-                </ul>
-            <?php else: ?>
-                <?php if (count($courses) === 0): ?>
-                    <div class="empty-courses">
-                        <p>Chưa có khóa học nào được giao</p>
-                    </div>
+            <?php
+                $list = !empty($searchTerm) ? $searchResults : $courses;
+                ?>
+                <ul class="course-list">
+                <?php if (empty($list)): ?>
+                    <li class="no-results">Không tìm thấy khóa học phù hợp.</li>
                 <?php else: ?>
-                    <ul style="padding: 0 10px;">
-                        <?php foreach ($courses as $course): ?>
-                            <li style="margin-bottom: 15px; list-style: none; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <?php foreach ($list as $course): ?>
+                        <li>
+                            <a href="../lophoc/lophocchitiet.php?course_id=<?= $course['Course_ID'] ?>&account_id=<?= $accountID ?>">
                                 <strong><?= htmlspecialchars($course['Course_Name']) ?></strong><br>
                                 <small><?= htmlspecialchars($course['Course_Description']) ?></small>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 <?php endif; ?>
-            <?php endif; ?>
+                </ul>
+
+
         </div>
 
         <div class="right-panel">

@@ -77,6 +77,88 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* ---------- DANH SÁCH KHÓA HỌC ---------- */
+.course-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .course-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .course-list li:last-child {
+    border-bottom: none;
+  }
+  
+  .course-list li a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .course-list li a:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .course-list li a strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  
+  .course-list li a small {
+    display: block;
+    color: #666;
+    font-size: 14px;
+  }
+  
+  /* -- Panel Header: title + search -- */
+.left-panel .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .left-panel .search-form input {
+    width: 200px;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* -- Khung trắng quanh list -- */
+  .left-panel {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  
+  /* -- Course list -- */
+  .course-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .course-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .course-list li:last-child {
+    border-bottom: none;
+  }
+  .course-list li a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+  }
+  .course-list li a:hover {
+    background-color: #f9f9f9
+  }  
+  
 .right-panel {
     flex: 1;
     display: flex;

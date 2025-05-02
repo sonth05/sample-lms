@@ -39,7 +39,7 @@
         <section class="hero-section">
             <div class="hero-content">
                 <h1 class="hero-title">Hệ thống học trực tuyến Đại học Thương mại</h1>
-                <a href="login2.php">
+                <a href="login/login2.php">
                     <button class="start-btn" id="startBtn">Bắt đầu ngay</button>
                 </a>
             </div>

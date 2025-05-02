@@ -12,7 +12,7 @@ $username = $_SESSION['username'];
 $search_term = $_GET['search'] ?? '';
 
 // Truy vấn danh sách khóa học mà sinh viên đã tham gia
-$sql = "SELECT DISTINCT c.Course_Name, c.Course_Description
+$sql = "SELECT DISTINCT c.Course_Name, c.Course_Description, tk.ID AS Account_ID, c.Course_ID
         FROM score s
         JOIN course c ON s.Course_ID = c.Course_ID
         JOIN taikhoan tk ON s.User_ID = tk.Person_ID
@@ -30,9 +30,11 @@ if (!empty($search_term)) {
 $stmt->execute();
 $result = $stmt->get_result();
 
+
 $courses = [];
 while ($row = $result->fetch_assoc()) {
     $courses[] = $row;
+    $accountID = $row['Account_ID'];
 }
 ?>
 <!DOCTYPE html>
@@ -91,26 +93,23 @@ while ($row = $result->fetch_assoc()) {
                 <input type="text" name="search" placeholder="🔍 Tìm khóa học..." value="<?= htmlspecialchars($search_term) ?>" style="width: 30%; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
             </form>
 
-            <div class="empty-courses">
-                <?php if (count($courses) === 0): ?>
-                    <div class="empty-icon">
-                        <svg width="80" height="80" viewBox="0 0 24 24">
-                            <path fill="#aaa" d="M4 8h16v10H4z" opacity="0.3"/>
-                            <path fill="#aaa" d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-8-2h4v2h-4V4zm8 14H4V8h16v10z"/>
-                        </svg>
-                    </div>
-                    <p>Không có khóa học</p>
+            <?php
+                $list = !empty($searchTerm) ? $searchResults : $courses;
+                ?>
+                <ul class="course-list">
+                <?php if (empty($list)): ?>
+                    <li class="no-results">Không tìm thấy khóa học phù hợp.</li>
                 <?php else: ?>
-                    <ul style="width: 100%; padding: 0 10px;">
-                        <?php foreach ($courses as $course): ?>
-                            <li style="margin-bottom: 15px; list-style: none; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <?php foreach ($list as $course): ?>
+                        <li>
+                            <a href="../lophoc/lophocchitiet.php?course_id=<?= $course['Course_ID'] ?>&account_id=<?= $accountID ?>">
                                 <strong><?= htmlspecialchars($course['Course_Name']) ?></strong><br>
                                 <small><?= htmlspecialchars($course['Course_Description']) ?></small>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 <?php endif; ?>
-            </div>
+                </ul>
         </div>
 
         <div class="right-panel">
