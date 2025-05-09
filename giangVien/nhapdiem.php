@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_scores'])) {
         foreach ($vals as $v) {
             if ($v < 0 || $v > 10) {
                 echo "<script>alert('❌ Điểm nhập không hợp lệ! Mọi giá trị phải từ 0 đến 10.');</script>";
-                goto _AFTER_SAVE;
+            
             }
         }
     }
@@ -70,6 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_scores'])) {
     }
 
     echo "<script>alert('✅ Đã lưu điểm thành công!');</script>";
+
+    // Redirect về chính trang nhập điểm để tránh chạy tiếp các đoạn dưới
+    header("Location: nhapdiem.php?course_id=$course_id&account_id=$teacher_id");
+    exit;
 }
 
 _AFTER_SAVE:
@@ -111,6 +115,55 @@ function extractNameParts($fullName) {
     $lastName  = implode(" ", array_slice($parts, 0, -1));
     $firstName = end($parts);
     return [$lastName, $firstName];
+}
+if (isset($_GET['export']) && $_GET['export'] === 'excel') {
+    $exportQuery = "SELECT u.Person_Name, u.Birthday, tk.Username, s.Score1, s.Score2, s.Score3, s.Score4, s.Score5
+                    FROM user u
+                    JOIN taikhoan tk ON tk.Person_ID = u.Person_ID
+                    JOIN score s ON s.User_ID = u.Person_ID
+                    WHERE s.Course_ID = ?";
+
+    $exportStmt = $conn->prepare($exportQuery);
+    $exportStmt->bind_param("i", $course_id);
+    $exportStmt->execute();
+    $result = $exportStmt->get_result();
+
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+    $sheet->setTitle("Danh sách điểm");
+
+    $headers = [
+        ['Năm học:', '2024-2025','','','',  'Học kỳ:', 'Học kỳ 2'],
+        ['Học phần:', $info['Course_Name'],'','','', 'Mã lớp học phần:', $info['Class_Code']],
+        [''],
+        ['STT', 'MÃ SV', 'HỌ VÀ TÊN', 'NGÀY SINH', 'ĐIỂM CHUYÊN CẦN', 'ĐIỂM KT1', 'ĐIỂM KT2', 'ĐIỂM THẢO LUẬN', 'ĐIỂM THI'],
+    ];
+    $sheet->fromArray($headers[0], null, 'A1');
+    $sheet->fromArray($headers[1], null, 'A2'); // ✅ thiếu dòng này
+    $sheet->fromArray($headers[3], null, 'A4'); 
+
+    $i = 5;
+    $stt = 1;
+    while ($row = $result->fetch_assoc()) {
+        $sheet->setCellValue("A{$i}", $stt++);
+        $sheet->setCellValue("B{$i}", $row['Username']);
+        $sheet->setCellValue("C{$i}", $row['Person_Name']);
+        $sheet->setCellValue("D{$i}", date('d/m/Y', strtotime($row['Birthday'])));
+        $sheet->setCellValue("E{$i}", $row['Score1']);
+        $sheet->setCellValue("F{$i}", $row['Score2']);
+        $sheet->setCellValue("G{$i}", $row['Score3']);
+        $sheet->setCellValue("H{$i}", $row['Score4']);
+        $sheet->setCellValue("I{$i}", $row['Score5']);
+        $i++;
+    }
+
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="baocao_diem.xlsx"');
+    header('Cache-Control: max-age=0');
+
+    $writer = new Xlsx($spreadsheet);
+    $writer->save('php://output');
+    exit;
 }
 ?>
 <!DOCTYPE html>
